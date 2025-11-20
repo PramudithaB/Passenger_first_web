@@ -1,13 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\User;
+use App\Http\Controllers\RouteController;
+use App\Models\Route87;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function admindashboard()
     {
-        return view('admin.admindashboard');
+        $route87 = Route87::all();
+        return view('admin.admindashboard', compact('route87'));
+    }
+    public function welcome()
+    {
+        $results = collect();
+        return view('welcome', compact('results'));
     }
 }
