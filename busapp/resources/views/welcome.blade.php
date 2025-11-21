@@ -725,7 +725,7 @@
         </div>
     </section>
     </form>
-    <tbody>
+    {{-- <tbody>
     @forelse($results as $bus)
         <tr>
             <td>{{ $bus->bus_number }}</td>
@@ -747,7 +747,7 @@
             <td colspan="13" class="text-center">No buses found</td>
         </tr>
     @endforelse
-</tbody>
+</tbody> --}}
 
   <!-- Bus Time Table Section -->
     <section class="timetable-section" id="timetable">

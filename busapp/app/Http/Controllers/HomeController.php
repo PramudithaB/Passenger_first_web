@@ -13,9 +13,5 @@ class HomeController extends Controller
         $route87 = Route87::all();
         return view('admin.admindashboard', compact('route87'));
     }
-    public function welcome()
-    {
-        $results = collect();
-        return view('welcome', compact('results'));
-    }
+  
 }

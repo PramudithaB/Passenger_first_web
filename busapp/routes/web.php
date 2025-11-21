@@ -25,3 +25,6 @@ route::post('store87route',[RouteController::class,'store87route'])->name('store
 Route::delete('/route87/delete/{id}', [RouteController::class, 'delete87'])->name('route87.delete');
 route::get('searchbuses',[RouteController::class,'searchbuses'])->name('searchbuses');
 
+Route::get('/', function () {
+    return view('welcome');
+});
