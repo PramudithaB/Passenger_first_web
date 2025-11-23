@@ -151,7 +151,7 @@
             </div>
         </section>
 
-        <!-- NEWS ARCHIVE: Grid of Smaller Articles -->
+        <!-- NEWS ARCHIVE: G rid of Smaller Articles -->
         <section id="archive">
             <h3 class="text-2xl font-bold text-[color:var(--primary-navy)] mb-6 border-b-2 border-gray-200 pb-2">Recent Archive</h3>
             
