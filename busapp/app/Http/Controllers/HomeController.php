@@ -77,4 +77,7 @@ class HomeController extends Controller
         // Pass the original search time back for display
         return view('search_results', compact('availableRoutes', 'from', 'to', 'time'));
     }
+    public function news(){
+        return view('news');
+    }
 }

@@ -27,4 +27,7 @@ Route::delete('/route87/delete/{id}', [RouteController::class, 'delete87'])->nam
 Route::get('/', [HomeController::class, 'welcome']);
 Route::get('/search', [HomeController::class, 'searchBus'])->name('search.bus');
 Route::get('/search_results', [HomeController::class, 'search_results'])->name('search_results');
+Route::get('/news', [HomeController::class, 'news'])->name('news');
+
+
 
