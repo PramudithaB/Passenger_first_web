@@ -8,6 +8,6 @@ class Route87 extends Model
 {
 
  
-        protected $table = 'route87s';
+        protected $table = 'route87';
 
 }

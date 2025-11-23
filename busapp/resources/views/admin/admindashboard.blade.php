@@ -98,7 +98,7 @@
         <td>{{ $route87->bus_type }}</td>
         <td>{{ $route87->colombo }}</td>
         <td>{{ $route87->thelwatta }}</td>
-        <td>{{ $route87->Chilow }}</td>
+        <td>{{ $route87->chilow }}</td>
         <td>{{ $route87->palawiya }}</td>
         <td>{{ $route87->puththalam }}</td>
         <td>{{ $route87->Anuradhapura }}</td>

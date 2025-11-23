@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\User;
 use App\Http\Controllers\RouteController;
-use App\Models\Route87; // Assuming this model connects to your bus route data
+use App\Models\Route87; 
 use Illuminate\Http\Request;
+use Carbon\Carbon; // Ensure Carbon is imported for time calculations
 
 class HomeController extends Controller
 {
@@ -18,68 +20,61 @@ class HomeController extends Controller
       return view('welcome');
     }
 
-    // New function to handle bus search requests
-  // In app/Http/Controllers/HomeController.php
-
-// ... other methods ...
-// In app/Http/Controllers/HomeController.php
-
-// ...
-// In app/Http/Controllers/HomeController.php
-
-public function search_results()
-{
-    // Fetches ALL records from the route87s table.
-    // This is useful for displaying a full list, but not a filtered search.
-    $availableRoutes = Route87::all(); 
-    
-    // You also need to define placeholder variables for the search inputs
-    // or the 'search_results.blade.php' view (which uses $from, $to, $time) will crash.
-    $from = 'All Routes';
-    $to = 'All Destinations';
-    $time = null;
-
-    // Correct syntax for compact:
-    return view('search_results', compact('availableRoutes', 'from', 'to', 'time'));
-}
-
-// app/Http/Controllers/HomeController.php
-
-// ... (other code)
-
-// app/Http/Controllers/HomeController.php
-
-public function searchBus(Request $request)
-{
-    $from = $request->input('from'); // e.g., 'colombo'
-    $to = $request->input('to');     // e.g., 'chilow'
-    $time = $request->input('time'); // e.g., '00:05:00'
-
-    // The bus must depart from the 'from' point AFTER the requested time.
-    // The columns in your database are named after the stops.
-    $query = Route87::query()
-        // 1. Where the departure time from the STARTING POINT is known (not NULL)
-        ->whereNotNull($from)
+    public function search_results()
+    {
+        // This method shows a safe fallback if called directly
+        $availableRoutes = collect([]); 
         
-        // 2. Where the departure time from the DESTINATION POINT is known (not NULL)
-        // This ensures the bus runs the full route.
-        ->whereNotNull($to)
+        $from = 'All Routes';
+        $to = 'All Destinations';
+        $time = null;
 
-        // 3. Where the bus departure time at the 'from' column 
-        //    is greater than or equal to the requested time.
-        // NOTE: The `$from` variable is safely being used as the column name here.
-        ->where($from, '>=', $time) 
+        return view('search_results', compact('availableRoutes', 'from', 'to', 'time'));
+    }
+
+    public function searchBus(Request $request)
+    {
+        $from = $request->input('from'); 
+        $to = $request->input('to');     
+        $time = $request->input('time'); // Time in HH:MM format (e.g., '23:55')
+
+        // 1. Convert input time to HH:MM:SS format
+        $search_time_string = $time . ':00'; // e.g., '23:55:00'
+
+        // 2. Adjust search time backwards by 5 minutes to catch recently departed buses (e.g., 23:45 bus when searched at 23:55)
+        // This relies on Carbon for time arithmetic before converting back to a string.
+        $search_start_carbon = Carbon::createFromTimeString($search_time_string)->subMinutes(5);
+        $adjusted_start_time_string = $search_start_carbon->format('H:i:s'); // e.g., '23:50:00'
+
+        $query = Route87::query()
+            // Mandatory checks to prevent PHP TypeErrors in the Blade view
+            ->whereNotNull($from) 
+            ->whereNotNull($to) 
+            // Sanity check: ensure destination time is later than origin time
+            ->whereRaw("TIME($to) > TIME($from)"); 
+
+        // --- FINAL FIX: MIDNIGHT WRAPAROUND LOGIC ---
         
-        // 4. (Optional but good for efficiency) Only look for buses where the destination time 
-        //    is later than the origin time, preventing database data entry errors.
-        ->whereRaw("TIME($to) > TIME($from)"); 
+        // We trigger the OR WHERE logic if the adjusted search time is late in the day (e.g., after 11 PM),
+        // covering the time range where the 00:00:00 bus might be missed.
+        if ($adjusted_start_time_string >= '23:00:00') {
+            // Case: Search is near midnight (e.g., 23:50:00). We need two ranges.
+            $query->where(function ($q) use ($from, $adjusted_start_time_string) {
+                // Range 1: Buses leaving from the adjusted time up to midnight (e.g., >= 23:50:00)
+                $q->where($from, '>=', $adjusted_start_time_string) 
+                  // Range 2: OR Buses leaving from midnight (00:00:00) up to a reasonable time the next day (e.g., up to 04:00:00)
+                  // The '04:00:00' boundary ensures we catch the 12:00 AM bus and early morning buses.
+                  ->orWhere($from, '<=', '04:00:00'); 
+            });
+        } else {
+            // Case: Standard daytime search. Only need buses leaving after the adjusted start time.
+            $query->where($from, '>=', $adjusted_start_time_string); 
+        }
+        // ------------------------------------
 
-    // The old complex time logic (lines 114-116 in your original code) is no longer needed
-    // for the main time constraint, as point 3 handles it directly:
-    // ->where($from, '>=', $time)
+        $availableRoutes = $query->get();
 
-    $availableRoutes = $query->get();
-
-    return view('search_results', compact('availableRoutes', 'from', 'to', 'time'));
-}
+        // Pass the original search time back for display
+        return view('search_results', compact('availableRoutes', 'from', 'to', 'time'));
+    }
 }
