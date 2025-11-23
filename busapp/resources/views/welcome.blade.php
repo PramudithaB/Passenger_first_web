@@ -681,73 +681,57 @@
             <h1>Welcome to Passenger First</h1>
             <p class="tagline">Passengers First - Your Comfort, Our Priority</p>
             
-            <!-- Search Form on Banner -->
-            <form method="GET" action="{{ route('searchbuses') }}">
+    
+  
+
+        <form method="GET" action="{{ route('search.bus') }}">
             <div class="search-form">
                 <h2>🔍 Search Bus Schedule</h2>
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="from">From</label>
-                        <select id="from">
+                        <select id="from" name="from">
                             <option value="">Select Starting Point</option>
-                            <option value="colombo">Colombo</option>
-                            <option value="makumbura">Makumbura</option>
-                            <option value="kandy">Kandy</option>
-                            <option value="galle">Galle</option>
-                            <option value="matara">Matara</option>
+                            <option value="colombo">colombo</option>
+                            <option value="thelwatta">thelwatta</option>
+                            <option value="chilow">chilow</option>
+                            <option value="palawiya">palawiya</option>
+                            <option value="puththalam">puththalam</option>
+                            <option value="Anuradhapura">anuradhapura</option>
+                            <option value="madawachchiya">madawachchiya</option>
+                            <option value="mannar">mannar</option>
+                            <option value="vauniya">vauniya</option>
+                            <option value="jaffna">jaffna</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="to">To</label>
-                        <select id="to">
+                        <select id="to" name="to">
                             <option value="">Select Destination</option>
-                            <option value="ella">Ella</option>
-                            <option value="badulla">Badulla</option>
-                            <option value="passara">Passara</option>
-                            <option value="jaffna">Jaffna</option>
-                            <option value="trincomalee">Trincomalee</option>
+                            <option value="colombo">colombo</option>
+                            <option value="thelwatta">thelwatta</option>
+                            <option value="chilow">chilow</option>
+                            <option value="palawiya">palawiya</option>
+                            <option value="puththalam">puththalam</option>
+                            <option value="anuradhapura">anuradhapura</option>
+                            <option value="madawachchiya">madawachchiya</option>
+                            <option value="mannar">mannar</option>
+                            <option value="vauniya">vauniya</option>
+                            <option value="jaffna">jaffna</option>
                         </select>
                     </div>
-                
                     <div class="form-group">
-                        <label for="time">Departure Time</label>
-                        <select id="time">
-                            <option value="">Any Time</option>
-                            <option value="morning">Morning (6AM-12PM)</option>
-                            <option value="afternoon">Afternoon (12PM-6PM)</option>
-                            <option value="evening">Evening (6PM-12AM)</option>
-                            <option value="night">Night (12AM-6AM)</option>
-                        </select>
+                        <label for="time">Time</label>
+                        <input type="time" name="time" class="form-control" id="time">
                     </div>
                 </div>
-                <button class="search-button">🔎 Search Available Buses</button>
+                <button type="submit" class="search-button">🔎 Search Available Buses</button>
             </div>
-        </div>
-    </section>
-    </form>
-    {{-- <tbody>
-    @forelse($results as $bus)
-        <tr>
-            <td>{{ $bus->bus_number }}</td>
-            <td>{{ $bus->bus_route }}</td>
-            <td>{{ $bus->bus_type }}</td>
-            <td>{{ $bus->colombo }}</td>
-            <td>{{ $bus->thelwatta }}</td>
-            <td>{{ $bus->chilow }}</td>
-            <td>{{ $bus->palawiya }}</td>
-            <td>{{ $bus->puththalam }}</td>
-            <td>{{ $bus->Anuradhapura }}</td>
-            <td>{{ $bus->madawachchiya }}</td>
-            <td>{{ $bus->mannar }}</td>
-            <td>{{ $bus->vauniya }}</td>
-            <td>{{ $bus->jaffna }}</td>
-        </tr>
-    @empty
-        <tr>
-            <td colspan="13" class="text-center">No buses found</td>
-        </tr>
-    @endforelse
-</tbody> --}}
+        </form>
+    </div>
+</section>
+
+ 
 
   <!-- Bus Time Table Section -->
     <section class="timetable-section" id="timetable">

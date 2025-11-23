@@ -23,8 +23,8 @@ route::get('welcome',[HomeController::class,'welcome'])->name('welcome');
 route::get('create87route',[RouteController::class,'create87route'])->name('create87route');
 route::post('store87route',[RouteController::class,'store87route'])->name('store87route');
 Route::delete('/route87/delete/{id}', [RouteController::class, 'delete87'])->name('route87.delete');
-route::get('searchbuses',[RouteController::class,'searchbuses'])->name('searchbuses');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'welcome']);
+Route::get('/search', [HomeController::class, 'searchBus'])->name('search.bus');
+Route::get('/search_results', [HomeController::class, 'search_results'])->name('search_results');
+
