@@ -92,7 +92,7 @@
                 Passenger <span>First</span>
             </div>
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
+                <li><a href="{{route('welcome')}}">Home</a></li>
                 <li><a href="#timetable">Time Table</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="{{route('news')}}">News</a></li>
