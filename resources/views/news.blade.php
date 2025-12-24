@@ -161,7 +161,7 @@
                 <article class="bg-white rounded-xl p-6 shadow-md news-card">
                     <span class="text-xs text-gray-500 mb-2 block">Sept 15, 2025</span>
                     <h4 class="text-xl font-semibold text-gray-800 mb-3 hover:text-[color:var(--primary-navy)] transition duration-150 cursor-pointer">
-                        Public Consultation: New Route Expansion
+                        Public Consultation : New Route Expansion
                     </h4>
                     <p class="text-gray-600 text-sm mb-4">
                         A letter published in 'The Economic Review' detailing plans for a new coastal route connecting Chilow and Thelwatta. Feedback period is now open.
