@@ -81,7 +81,7 @@
 
 <body>
     <div class="form-container">
-        <h2>Add 87 Bus Detail</h2>
+        <h2>Add 87 Bus Details</h2>
 
         <form action="{{route('store87route')}}" method="POST">
 @csrf
