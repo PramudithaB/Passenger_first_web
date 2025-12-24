@@ -707,7 +707,7 @@
                     <div class="form-group">
                         <label for="to">To</label>
                         <select id="to" name="to">
-                            <option value="">Select Destination</option>
+                            <option value="">Select  Destination</option>
                             <option value="colombo">colombo</option>
                             <option value="thelwatta">thelwatta</option>
                             <option value="chilow">chilow</option>
